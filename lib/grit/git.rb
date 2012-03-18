@@ -334,10 +334,11 @@ module Grit
       argv = []
       argv << Git.git_binary
       argv << "--git-dir=#{self.git_dir}" if base
-      argv << "--work-tree=#{self.work_tree}" if base and cmd != "clone"
+      argv << "--work-tree=#{self.work_tree}" if base and cmd.to_s.tr("_", "-") != "clone"
       argv << cmd.to_s.tr('_', '-')
       argv.concat(options_to_argv(options))
       argv.concat(args)
+
 
       # run it and deal with fallout
       Grit.log(argv.join(' ')) if Grit.debug
